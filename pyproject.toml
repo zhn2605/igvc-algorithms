@@ -1,5 +1,31 @@
 [tool.uv.workspace]
 members = ["core/*"]
 
+[tool.pytest.ini_options]
+testpaths = ["core", "tests"]
+addopts = ["--import-mode=importlib"]
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.lint]
+extend-select = ["I", "TID251"]
+
+# specific ban against ROS in core
+[tool.ruff.lint.flake8-tidy-imports.banned-api]
+"rclpy".msg = "core/ must not import ROS. Put ROS code in ros/."
+"rosidl_runtime_py".msg = "core/ must not import ROS. Put ROS code in ros/."
+"rosidl_parser".msg = "core/ must not import ROS. Put ROS code in ros/."
+"builtin_interfaces".msg = "core/ must not import ROS messages. Use igvc_types."
+"std_msgs".msg = "core/ must not import ROS messages. Use igvc_types."
+"geometry_msgs".msg = "core/ must not import ROS messages. Use igvc_types."
+"nav_msgs".msg = "core/ must not import ROS messages. Use igvc_types."
+"sensor_msgs".msg = "core/ must not import ROS messages. Use igvc_types."
+"diagnostic_msgs".msg = "core/ must not import ROS messages. Use igvc_types."
+
+# ROS allowed in adapters
+[tool.ruff.lint.per-file-ignores]
+"ros/**" = ["TID251"]
+
 [dependency-groups]
 dev = ["pytest>=8", "ruff>=0.13"]
