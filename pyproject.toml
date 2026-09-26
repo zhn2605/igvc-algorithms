@@ -1,0 +1,5 @@
+[tool.uv.workspace]
+members = ["core/*"]
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.13"]
