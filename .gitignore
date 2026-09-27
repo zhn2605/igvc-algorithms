@@ -9,3 +9,6 @@ __pycache__/
 build/
 install/
 log/
+
+# ros
+.venv-ros/

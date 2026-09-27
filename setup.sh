@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Sets up a ROS machine (Ubuntu 24.04). Safe to re-run. See docs/setup.md.
 set -euo pipefail
+cd "$(dirname "$0")"
 
 codename=$(. /etc/os-release && echo "${UBUNTU_CODENAME:-${VERSION_CODENAME:-}}")
 if [ "$codename" != noble ]; then
@@ -33,3 +34,23 @@ if [ ! -f /opt/ros/jazzy/setup.bash ]; then
     # ros-base, not desktop: no RViz/Qt, Foxglove replaces them
     sudo apt-get install -y ros-jazzy-ros-base ros-dev-tools
 fi
+
+# apt packages listed in ros/*/package.xml. --rosdistro instead of sourcing
+# /opt/ros/jazzy/setup.bash, which trips set -u.
+[ -f /etc/ros/rosdep/sources.list.d/20-default.list ] || sudo rosdep init
+rosdep update --rosdistro jazzy
+if ! rosdep check --from-paths ros --ignore-src --rosdistro jazzy >/dev/null 2>&1; then
+    sudo apt-get update
+    rosdep install --from-paths ros --ignore-src --rosdistro jazzy -y
+fi
+
+# The venv bridge: Ubuntu's python + ROS (system site-packages) + core packages.
+# --no-dev keeps pytest/ruff out so they don't shadow ROS's apt versions.
+if ! command -v uv >/dev/null; then
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    export PATH="$HOME/.local/bin:$PATH"
+fi
+[ -d .venv-ros ] || uv venv --system-site-packages --python /usr/bin/python3 .venv-ros
+UV_PROJECT_ENVIRONMENT=.venv-ros uv sync --locked --no-dev
+
+echo "done. to build: source /opt/ros/jazzy/setup.zsh (or .bash), source .venv-ros/bin/activate, python -m colcon build"
