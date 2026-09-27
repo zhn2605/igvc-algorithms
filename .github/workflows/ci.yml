@@ -35,3 +35,20 @@ jobs:
 
       - name: Test
         run: uv run pytest
+  ros:
+    runs-on: ubuntu-latest
+    container: ros:jazzy-ros-base
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v7
+
+      - name: Setup
+        run: ./setup.sh
+
+      - name: Build and test
+        run: |
+          source /opt/ros/jazzy/setup.bash
+          source .venv-ros/bin/activate
+          python -m colcon build
+          python -m colcon test --return-code-on-test-failure
