@@ -47,6 +47,7 @@ jobs:
         run: ./setup.sh
 
       - name: Build and test
+        shell: bash
         run: |
           source /opt/ros/jazzy/setup.bash
           source .venv-ros/bin/activate
