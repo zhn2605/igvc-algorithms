@@ -16,3 +16,7 @@ To maintain cross-platform compatibility for everyone and decouple logic from RO
 | `ros/` | Thin ROS 2 adapters around `core/` |
 | `tests/` | Repo-wide checks |
 | `docs/` | Documentation for setup, rules, etc. |
+
+## Contributors
+- Zihan Zhao
+- 
