@@ -28,4 +28,7 @@ extend-select = ["I", "TID251"]
 "ros/**" = ["TID251"]
 
 [dependency-groups]
-dev = ["pytest>=8", "ruff>=0.13"]
+dev = [
+    "pytest>=8",
+    "ruff>=0.13",
+]
