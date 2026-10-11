@@ -18,7 +18,10 @@ To maintain cross-platform compatibility for everyone and decouple logic from RO
 | `docs/` | Documentation for setup, rules, etc. |
 
 ## Contributors
-Zihan Zhao
+@zhn2605
 
 @RAdev-py
+
+@yang-junwon
+
 @Shijied123
