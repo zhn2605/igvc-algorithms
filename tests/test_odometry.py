@@ -4,7 +4,7 @@ import pytest
 from igvc_drive_core.odometry import odometry_step
 from igvc_types import Pose2D, WheelTicks
 
-K = dict(m_per_tick=0.001, track_width=0.5)
+K = {"m_per_tick": 0.001, "track_width": 0.5}
 
 
 def test_straight():
