@@ -12,3 +12,7 @@ log/
 
 # ros
 .venv-ros/
+
+
+# mac
+.DS_Store
